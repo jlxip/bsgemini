@@ -18,7 +18,7 @@ CXXFLAGS := $(INCLUDES) $(CXXFLAGS_BASE) $(CXXFLAGS_WARN) $(CXXFLAGS_EXCLUDE)
 
 LINKER := $(CXX)
 LINKER_FLAGS := -Wl,-z,relro,-z,now
-LINKER_FLAGS_END := $(patsubst %,-l%,$(LIBS))
+LINKER_FLAGS_END := $(patsubst %,-l%,$(LIBS)) -pthread
 
 # --- OBJS ---
 OBJPATHS := $(shell cd src && find . -type d | xargs -I {} echo "$(OBJPATH)/"{})
