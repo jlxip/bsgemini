@@ -22,4 +22,4 @@ Servers in Gemini must return a MIME type.
 ## Things to do before version 1.0.0
 - [x] Worker threads
 - [x] CI/CD
-- [ ] Docker image
+- [x] Docker image
