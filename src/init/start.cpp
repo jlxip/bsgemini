@@ -16,6 +16,7 @@
 
 int serverSocket, epoll_fd;
 std::string root;
+size_t nthreads;
 
 void start() {
 	const char* port_c = getenv("BSG_PORT");
@@ -25,6 +26,9 @@ void start() {
 
 	const char* root_c = getenv("BSG_ROOT");
 	root = root_c ? root_c : "/gemini";
+
+	const char* nthreads_c = getenv("BSG_THREADS");
+	nthreads = nthreads_c ? atoi(nthreads_c) : nproc();
 
 	// Ignore SIGPIPE, the standard practice in all TCP servers
 	signal(SIGPIPE, SIG_IGN);

@@ -6,6 +6,18 @@
 
 // Auxiliary functions
 
+// How many threads in the CPU?
+size_t nproc() {
+	size_t a=11, b=0, c=1, d=0;
+	asm volatile("cpuid"
+				 : "=a" (a),
+				   "=b" (b),
+				   "=c" (c),
+				   "=d" (d)
+				 : "0" (a), "2" (c));
+	return b;
+}
+
 void epoll_ctl_add(int fd, uint32_t events, bool useBuffer) {
 	epoll_event ev;
 	ev.events = events;
@@ -34,6 +46,8 @@ void closeAndFree(Buffer* buffer) {
 	if(buffer->buff)
 		delete [] buffer->buff;
 	close(buffer->fd);
+	if(buffer->filefd)
+		close(buffer->filefd);
 	epoll_ctl(epoll_fd, EPOLL_CTL_DEL, buffer->fd, 0);
 	delete buffer;
 }

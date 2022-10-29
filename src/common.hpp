@@ -12,12 +12,15 @@
 extern std::unordered_map<std::string, std::string> MIMEs;
 extern int serverSocket, epoll_fd;
 extern std::string root;
+extern size_t nthreads;
 
 #define MAX_PATH_LEN 1024
 #define MAX_REQ_LEN (MAX_PATH_LEN+2)
 
+size_t nproc();
 void prepareMIMEs();
 void start();
+[[noreturn]] void* worker(void*);
 void epoll_ctl_add(int fd, uint32_t events, bool useBuffer);
 void setNonBlocking(int conn);
 

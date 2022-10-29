@@ -7,6 +7,7 @@
 Real simple, two environment variables:
 - `BSG_PORT` defaults to 1964 (1 below the standard Gemini port, 1965). Specifies the port to listen to, on all interfaces.
 - `BSG_ROOT` defaults to `/gemini`. Specifies the root of the static server.
+- `BSG_THREADS` defaults to the number of threads in the CPU. Do not use more, since performance will go down.
 
 Below the root, files should exist. Accessing `gemini://server/hello` checks for the existence of `$BSG_ROOT/hello`.
 - If it's a file, it's served.
@@ -19,6 +20,6 @@ Servers in Gemini must return a MIME type.
 - If MIME type could not be identified, `application/octet-stream` will be used.
 
 ## Things to do before version 1.0.0
-- [ ] Worker threads
+- [x] Worker threads
 - [ ] CI/CD
 - [ ] Docker image
