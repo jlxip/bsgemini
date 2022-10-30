@@ -19,6 +19,17 @@ Servers in Gemini must return a MIME type.
 - `gemini` and `gmi` extensions indicate the non-standard MIME type `text/gemini`, defined [here](https://gemini.circumlunar.space/docs/gemtext.gmi).
 - If MIME type could not be identified, `application/octet-stream` will be used.
 
+## Docker
+A Dockerfile is available at the root of this repository. It is automatically built and pushed to the Docker Hub on each release, with the name [jlxip/bsgemini](https://hub.docker.com/r/jlxip/bsgemini). To use it, run something along the lines of:
+
+```bash
+docker volume create serverdata
+docker run -d -p 1964:1964 --name myserver --restart=unless-stopped -v serverdata:/gemini jlxip/bsgemini:latest
+echo 'Hello' | sudo tee /var/lib/docker/volumes/serverdata/_data/index.gmi
+```
+
+If you have zodiac up and running, pointing to `localhost:1964`, you should be able to access your brand new static capsule now.
+
 ## Things to do before version 1.0.0
 - [x] Worker threads
 - [x] CI/CD
