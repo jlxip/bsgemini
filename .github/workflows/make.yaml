@@ -10,8 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: 'recursive'
+      - name: Get SSockets
+        run: |
+          sudo wget https://github.com/jlxip/ssockets/releases/latest/download/libssockets.so -O /usr/lib/libssockets.so
+          sudo wget https://github.com/jlxip/ssockets/releases/latest/download/ssockets.h -O /usr/include/ssockets.h
       - name: Compile
         run: make -C $GITHUB_WORKSPACE
       - name: Publish

@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <string>
-#include <sys/socket.h>
+#include <ssockets.h>
 #include <sys/stat.h>
 #include <unordered_map>
 #include <vector>
@@ -17,27 +17,16 @@ extern size_t nthreads;
 #define MAX_PATH_LEN 1024
 #define MAX_REQ_LEN (MAX_PATH_LEN+2)
 
-size_t nproc();
-void prepareMIMEs();
-void start();
-[[noreturn]] void* worker(void*);
-void epoll_ctl_add(int fd, uint32_t events, bool useBuffer);
-void setNonBlocking(int conn);
-
-struct Buffer {
+struct Data {
 	char* buff = nullptr;
-	size_t ctr = 0; // Bytes written in "buff"
-	int fd = 0;
+	size_t ctr = 0;
 
 	int filefd = 0;
 	off_t off = 0;
 	off_t sz = 0;
 };
 
-void closeAndFree(Buffer* buffer);
-void handle(Buffer* buffer);
-void handlePath(Buffer* buffer, std::string& path);
-void handleSend(Buffer* buffer);
+void prepareMIMEs();
 void replaceAll(std::string& a, const std::string& b, const std::string& c);
 
 inline ssize_t sendstr(int fd, std::string& str) {

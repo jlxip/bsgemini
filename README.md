@@ -7,7 +7,7 @@
 Real simple, two environment variables:
 - `BSG_PORT` defaults to 1964 (1 below the standard Gemini port, 1965). Specifies the port to listen to, on all interfaces.
 - `BSG_ROOT` defaults to `/gemini`. Specifies the root of the static server.
-- `BSG_THREADS` defaults to the number of threads in the CPU. Do not use more, since performance will go down.
+- `BSG_THREADS` defaults to the number of threads in the CPU. Do not use more, performance will go down.
 
 Below the root, files should exist. Accessing `gemini://server/hello` checks for the existence of `$BSG_ROOT/hello`.
 - If it's a file, it's served.
@@ -29,6 +29,10 @@ echo 'Hello' | sudo tee /var/lib/docker/volumes/serverdata/_data/index.gmi
 ```
 
 If you have zodiac up and running, pointing to `localhost:1964`, you should be able to access your brand new static capsule now.
+
+## Additional information
+- bsgemini follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html)
+- Dependencies: [ssockets](https://github.com/jlxip/ssockets)
 
 ## Things to do before version 1.0.0
 - [x] Worker threads

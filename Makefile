@@ -2,7 +2,7 @@
 PROJNAME := bsgemini
 RESULT := bsgemini
 
-
+LIBS := ssockets
 
 SHELL := /bin/bash
 SRCPATH := src
