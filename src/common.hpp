@@ -10,7 +10,6 @@
 #include <vector>
 
 extern std::unordered_map<std::string, std::string> MIMEs;
-extern int serverSocket, epoll_fd;
 extern std::string root;
 extern size_t nthreads;
 
