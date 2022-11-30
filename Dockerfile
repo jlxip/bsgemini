@@ -1,14 +1,25 @@
-FROM alpine:3.16
+FROM jlxip/ssockets:0.1.3-docker2 as build
 
 ENV BSG_PORT=1964 BSG_ROOT=/gemini
 
-RUN ["wget", "https://github.com/jlxip/ssockets/releases/latest/download/libssockets.so", "-O", "/usr/lib/libssockets.so"]
+# Make dependencies
+RUN apk add --no-cache git make g++
+# Execution dependencies
+RUN apk add mailcap libstdc++
 
-RUN ["mkdir", "/app"]
-RUN ["chown", "nobody:nobody", "/app"]
-COPY --chown=nobody:nobody ./bsgemini /app/bsgemini
+RUN git clone https://github.com/jlxip/bsgemini ~/bsgemini
+RUN sed -i 's/\/bin\/bash/\/bin\/sh/g' ~/bsgemini/Makefile
+RUN make -C ~/bsgemini
+RUN mkdir /app && mv ~/bsgemini/bsgemini /app/
+RUN chmod -R o+rx /app
 
-RUN ["apk", "add", "--no-cache", "mailcap", "gcompat", "libstdc++"]
+# Cleanup
+RUN rm -rf ~/bsgemini
+RUN apk del git make g++
+
+# Flatten time
+FROM scratch
+COPY --from=build / /
 
 USER nobody
 CMD ["/app/bsgemini"]
