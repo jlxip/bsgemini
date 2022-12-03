@@ -1,6 +1,8 @@
 #ifndef TASKS_HPP
 #define TASKS_HPP
 
+#include <ssockets.h>
+
 enum {
 	STATE_INIT,
 	STATE_READ,
